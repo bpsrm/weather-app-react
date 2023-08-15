@@ -8,6 +8,46 @@ const CollectData = () => {
     const [selectedRegion, setSelectedRegion] = useState(null);
     const [selectedCity, setSelectedCity] = useState(null);
 
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude, longitude } = position.coords;
+                
+                const settings = {
+                    url: 'https://api.openweathermap.org/data/2.5/',
+                    apiKey: '8f6c5713af63cd3608451d75c5b03773',
+                    icon: 'http://openweathermap.org/img/wn/'
+                };
+        
+                fetch(`${settings.url}weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${settings.apiKey}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    $('.icon-weather').empty();                    
+                    const weatherIconCode = data.weather[0].icon;
+                    
+                    const iconUrl = `${settings.icon}${weatherIconCode}@2x.png`;
+                    const iconImg = $('<img>').attr('src', iconUrl).addClass('weather-icon');
+        
+                    const tempFormat = Math.floor(data.main.temp);
+        
+                    $('.city').text(`${data.name}, ${data.sys.country}`)
+                    $('.icon-weather').append(iconImg)
+                    $('.weather-description').text(data.weather[0].description)
+                    $('.temperature').text(`${tempFormat} °C`)
+                    $('.temp-min').text(`${data.main.temp_min} °C`)
+                    $('.temp-max').text(`${data.main.temp_max} °C`)
+                    $('.temp-feel').text(`${data.main.feels_like}`)
+                    $('.humidity').text(`${data.main.humidity} %`)
+                    $('.pressure').text(`${data.main.pressure} hPA`)
+                    $('.wind').text(`${Math.floor(data.wind.speed)} m/s`)
+                })
+            });
+        } else {
+            console.log("Geolocation is not available in this browser.");
+        }
+    }, [])
+
     const handleInputKeyPress = (e) => {
         if (e.key === 'Enter') {
 
@@ -44,45 +84,6 @@ const CollectData = () => {
             })
         }
     };
-
-    useEffect(() => {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const { latitude, longitude } = position.coords;
-                const settings = {
-                    url: 'https://api.openweathermap.org/data/2.5/',
-                    apiKey: '8f6c5713af63cd3608451d75c5b03773',
-                    icon: 'http://openweathermap.org/img/wn/'
-                };
-        
-                fetch(`${settings.url}weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${settings.apiKey}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data)
-                    $('.icon-weather').empty();                    
-                    const weatherIconCode = data.weather[0].icon;
-                    
-                    const iconUrl = `${settings.icon}${weatherIconCode}@2x.png`;
-                    const iconImg = $('<img>').attr('src', iconUrl).addClass('weather-icon');
-        
-                    const tempFormat = Math.floor(data.main.temp);
-        
-                    $('.city').text(`${data.name}, ${data.sys.country}`)
-                    $('.icon-weather').append(iconImg)
-                    $('.weather-description').text(data.weather[0].description)
-                    $('.temperature').text(`${tempFormat} °C`)
-                    $('.temp-min').text(`${data.main.temp_min} °C`)
-                    $('.temp-max').text(`${data.main.temp_max} °C`)
-                    $('.temp-feel').text(`${data.main.feels_like}`)
-                    $('.humidity').text(`${data.main.humidity} %`)
-                    $('.pressure').text(`${data.main.pressure} hPA`)
-                    $('.wind').text(`${Math.floor(data.wind.speed)} m/s`)
-                })
-            });
-        } else {
-            console.log("Geolocation is not available in this browser.");
-        }
-    }, [])
 
     const handleRegion = (value, text) => {
         setSelectedRegion(value);
