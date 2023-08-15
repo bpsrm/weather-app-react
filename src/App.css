@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap');
+
+:root {
+  --bg-overlay: rgba(0, 0, 0, 0.4);
+  --text-color: #f5f5f5;
+  --bg-content: rgba(0, 0, 0, 0.7);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Oswald', sans-serif;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+  /* height: 100vh; */
+  background-position: center center;
+  background-color: var(--bg-overlay);
+}
+
+.link-api {
+  text-decoration: none;
+  padding-left: 5px;
+  color: #5e5e5e;
+  transition: all .25s ease-in-out;
+}
+
+.link-api:hover {
+  color: #EB6E4B;
+}
+
+.form-control {
+  padding: 10px !important;
+  outline: none;
+  border: 3px solid #272727 !important;
+  font-size: 18px !important;
+}
+
+.form-control:active {
+  outline-offset: none !important;
+}
+
+.form-control:focus {
+  transition: all .25s ease-in;
+  box-shadow: 0 3px 10px #272727 !important;
+}
+
+.dropdown-menu.show {
+  width: 100%;
+}
+
+.dropdown-btn {
+  background-color: var(--bg-content) !important;
+  padding: 10px !important;
+  border: 1px solid #272727 !important;
+  outline: none !important;
+  text-transform: uppercase;
+  font-size: 18px !important;
+}
+
+.box-weather {
+  background-color: var(--bg-content);
+  padding: 20px;
+  border-radius: 10px;
+  color: var(--text-color);
+}
+
+.temp-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.temp-box h1 {
+  font-size: 64px;
+}
+
+.box-detail {
+  background-color: var(--bg-content);
+  padding: 20px 10px;
+  border-radius: 10px;
+  color: var(--text-color);
+}
+
+.box-detail i {
+  font-size: 32px;
+}
+
+.box-temp-sub {
+  background-color: var(--bg-content);
+  padding: 20px 10px;
+  border-radius: 10px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.box-temp-sub i {
+  font-size: 32px;
+}
